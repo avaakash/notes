@@ -1,0 +1,4 @@
+articles/medium-to-markdown
+.tmp*
+secrets/
+temp/

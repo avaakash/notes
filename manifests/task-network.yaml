@@ -1,0 +1,30 @@
+apiVersion: litmuschaos.io/v1alpha1
+kind: TaskDefinition
+metadata:
+  name: wf1-task1
+  namespace: delegate
+  labels:
+    context: test-wf-instance
+    name: wf-task1
+    delegate-id: "b1e8e654-74c6-4de4-b87d-cd594cb97d32"
+spec: 
+  chaosDelegate: "b1e8e654-74c6-4de4-b87d-cd594cb97d32"
+  taskState: "awaited"
+  action:
+    chaos:
+      experiment: linuxvm-network-latency
+      networkChaos/inputs:
+        interface: "eth1"
+        latency: 2000
+        jitter: 0
+        duration: 60
+      probes: 
+        - name: service-health-check 
+          type: "httpProbe"
+          httpProbe/inputs:
+            url: "<url>"
+            method:
+              get:
+                criteria: "=="
+                responseCode: "<response code>"
+          mode: Continuous

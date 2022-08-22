@@ -1,0 +1,29 @@
+apiVersion: litmuschaos.io/v1alpha1
+kind: TaskDefinition
+metadata:
+  name: wf1-task2
+  namespace: litmus
+  labels:
+    context: test-wf-instance
+    name: wf-1
+    chaosDelegate: "d_id_1"
+spec: 
+  chaosDelegate: "d_id_1"
+  taskState: "awaited"
+  action: #m-agent gets a list of things it needs to do in this exp (how it already knows. this is just a 
+    chaos:
+      experiment: linuxvm-stress
+      stressChaos/inputs:
+        load: 100
+        workers: 2
+        duration: 60
+      probes: 
+        - name: service-health-check 
+          type: "httpProbe"
+          httpProbe/inputs:
+            url: "<url>"
+            method:
+              get:
+                criteria: "=="
+                responseCode: "<response code>"
+          mode: Continuous
