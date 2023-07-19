@@ -50,10 +50,4 @@ server {
 		# as directory, then fall back to displaying a 404.
 		try_files $uri $uri/ =404;
 	}
-
-    location = /health {
-            access_log off;
-            add_header 'Content-Type' 'application/json';
-            return 200 '{"status":"UP"}';
-    }
 }
